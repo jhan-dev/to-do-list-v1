@@ -3,19 +3,41 @@ const bodyParser = require("body-parser")
 
 const app = express()
 
-app.get("/", function(){
-    res.send("Hello")
+app.set("view engine", "ejs")
+
+app.get("/", function(req, res){
 
     let today = new Date()
+    let currentDay = today.getDay()
+    let day = ""
 
-    if (today.getDay() === 6 || today.getDay() === 0) {
-        res.write("<h1>Woo Hoo, it's the weekend!</h1>")
+    switch (currentDay) {
+        case 0:
+            day = "Sunday"
+            break;
+        case 1:
+            day = "Monday"
+            break;
+        case 2:
+            day = "Tuesday"
+            break;
+        case 3:
+            day = "Wednesday"
+            break;
+        case 4:
+            day = "Thursday"
+            break;
+        case 5:
+            day = "Friday"
+            break;
+        case 6:
+            day = "Saturday"
+            break;
+            default:
+                console.log(`Error: current day is equal to: ${currentDay}`)
     }
-    else {
-        res.write("<p>Unfortunately, it's not the weekend.</p>")
-        res.write("<h1>Boo, it's a work day...</h1>")
-        res.send()
-    }
+
+    res.render("list", {kindOfDay: day})
 
 })
 
