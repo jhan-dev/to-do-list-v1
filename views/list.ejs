@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do List</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-    <h1> <%= kindOfDay %> </h1>
+  <div class="box" id="heading">
+    <h1>
+      <%= listTitle %>
+    </h1>
+  </div>
 
-    <ul>
-        <% for (let i=0; i<newListItems.length; i++) { %>
-            <li><%= newListItems[i] %></li>
-        <% } %>
-    </ul>
 
-    <form class="" action="/" method="post">
-        <input type="text" name="newItem">
-        <button type="submit" name="button">Add Task</button>
-    </form>
+  <div class="box">
+
+    <% for (let i=0; i<newListItems.length; i++) { %>
+      <div class="item">
+        <input type="checkbox">
+        <p>
+          <%= newListItems[i] %>
+        </p>
+      </div>
+      <% } %>
+
+        <form class="item" action="/" method="post">
+          <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+          <button type="submit" name="list" value="<%= %>">+</button>
+        </form>
+
+  </div>
 
 </body>
+
 </html>
