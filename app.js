@@ -49,7 +49,14 @@ app.get("/", function (req, res) {
   
   // let day = date.getDate();
   
-  res.render("list", { listTitle: "Today", newListItems: items });
+  Item.find({})
+    .then(function(foundItems){
+      res.render("list", { listTitle: "Today", newListItems: foundItems });
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+
 
   // let currentDay = today.getDay()
   // let day = ""
