@@ -35,21 +35,26 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
-Item.insertMany(defaultItems)
-  .then(function(){
-    console.log("Successfully saved default items to DB.");
-  })
-  .catch(function(err){
-    console.log(err)
-  });
-  
-
-
 app.get("/", function (req, res) {
   
   // let day = date.getDate();
   
-  res.render("list", { listTitle: "Today", newListItems: items });
+  Item.find({})
+    .then(function(foundItems){
+      if (foundItems.length === 0) {
+        Item.insertMany(defaultItems)
+          .then(function(){
+            console.log("Successfully saved default items to DB.");
+          })
+          .catch(function(err){
+            console.log(err)
+          })
+        res.redirect("/");
+      }
+      else {
+        res.render("list", { listTitle: "Today", newListItems: foundItems });
+      }
+    })
 
   // let currentDay = today.getDay()
   // let day = ""
