@@ -35,6 +35,14 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
+Item.insertMany(defaultItems)
+  .then(function(){
+    console.log("Successfully saved default items to DB.");
+  })
+  .catch(function(err){
+    console.log(err)
+  });
+  
 
 
 app.get("/", function (req, res) {
