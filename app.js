@@ -35,6 +35,13 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
+const listSchema = {
+  name: String,
+  items: [itemsSchema]
+};
+
+const List = mongoose.model("List", listSchema);
+
 app.get("/", function (req, res) {
   
   // let day = date.getDate();
@@ -85,6 +92,33 @@ app.get("/", function (req, res) {
   //             console.log(`Error: current day is equal to: ${currentDay}`)
   // }
 
+});
+
+app.get("/:customListName", function(req, res){
+  const customListName = req.params.customListName;
+
+  List.findOne({name: customListName})
+    .then(function(foundList){
+      if (foundList) {
+        res.render("list", {listTitle: foundList.name, newListItems: foundList.items});
+      }
+      else if (!foundList) {
+        const list = new List({
+          name: customListName,
+          items: defaultItems
+        })
+
+        list.save();
+        res.redirect(`/${customListName}`);
+      }
+    })
+
+  const list = new List({
+    name: customListName,
+    items: defaultItems
+  })
+
+  list.save();
 });
 
 app.post("/", function (req, res) {
