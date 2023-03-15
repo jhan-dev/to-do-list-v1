@@ -97,11 +97,27 @@ app.get("/", function (req, res) {
 app.get("/:customListName", function(req, res){
   const customListName = req.params.customListName;
 
+  List.findOne({name: customListName})
+    .then(function(foundList){
+      if (foundList) {
+        res.render("list", {listTitle: foundList.name, newListItems: foundList.items});
+      }
+      else if (!foundList) {
+        const list = new List({
+          name: customListName,
+          items: defaultItems
+        })
+
+        list.save();
+        res.redirect(`/${customListName}`);
+      }
+    })
+
   const list = new List({
     name: customListName,
     items: defaultItems
   })
-  
+
   list.save();
 });
 
